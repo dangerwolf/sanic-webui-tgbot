@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+        <h5 class="m-0">📜 发送历史 (最近50条)</h5>
+        <button class="btn btn-outline-secondary btn-sm" onclick="loadHistory()">
+            刷新列表
+        </button>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" style="width: 5%">ID</th>
+                        <th scope="col" style="width: 20%">时间</th>
+                        <th scope="col" style="width: 15%">来源IP</th>
+                        <th scope="col" style="width: 45%">内容预览</th>
+                        <th scope="col" style="width: 15%">状态</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    async function loadHistory() {
+        const tbody = document.getElementById('historyTableBody');
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted">加载中...</td></tr>';
+
+        try {
+            const response = await fetch('/history?limit=50');
+            const data = await response.json();
+
+            tbody.innerHTML = ''; // 清空
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted">暂无记录</td></tr>';
+                return;
+            }
+
+            data.forEach(item => {
+                const statusBadge = item.success 
+                    ? '<span class="badge bg-success">成功</span>' 
+                    : '<span class="badge bg-danger">失败</span>';
+                
+                // 截断过长的内容
+                let contentPreview = item.content.length > 50 
+                    ? item.content.substring(0, 50) + '...' 
+                    : item.content;
+                // 转义HTML防止注入
+                contentPreview = contentPreview.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+                const row = `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td class="text-secondary small">${item.time}</td>
+                        <td class="small">${item.ip}</td>
+                        <td class="text-break" style="font-family: monospace;">${contentPreview}</td>
+                        <td>${statusBadge}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        } catch (error) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger py-4">加载失败: ${error.message}</td></tr>`;
+        }
+    }
+
+    // 页面加载时自动获取
+    document.addEventListener('DOMContentLoaded', loadHistory);
+</script>
+{% endblock %}
