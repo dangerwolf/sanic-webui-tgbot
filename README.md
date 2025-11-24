@@ -76,6 +76,12 @@ docker run -d `
 ```
 Web UI: http://localhost:9010
 ```
+
+
+<img width="969" height="570" alt="image" src="https://github.com/user-attachments/assets/f02a9368-d9c5-4adb-88db-95d252846735" />
+<img width="1024" height="342" alt="image" src="https://github.com/user-attachments/assets/1b72c82a-dc27-452e-b5bc-a969a6c95242" />
+
+
 ## ⚙️ 配置说明 (环境变量)
 |变量名|必填|说明|示例|
 | ---- | ---- | ---- | ---- |
