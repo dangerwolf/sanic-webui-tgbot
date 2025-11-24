@@ -52,7 +52,7 @@ mkdir -p $(pwd)/bot_data
 docker run -d \
   --name tg-pusher \
   --restart always \
-  -p 9000:8000 \
+  -p 9010:8000 \
   -v $(pwd)/bot_data:/app/data \
   -e BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrsTUVwxyz" \
   -e CHAT_ID="123456789" \
@@ -64,7 +64,7 @@ Windows (PowerShell):
 docker run -d `
   --name tg-pusher `
   --restart always `
-  -p 9000:8000 `
+  -p 9010:8000 `
   -v ${PWD}/bot_data:/app/data `
   -e BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrsTUVwxyz" `
   -e CHAT_ID="123456789" `
@@ -74,7 +74,7 @@ docker run -d `
 
 启动成功后，访问宿主机端口：
 ```
-Web UI: http://localhost:9000
+Web UI: http://localhost:9010
 ```
 ## ⚙️ 配置说明 (环境变量)
 |变量名|必填|说明|示例|
@@ -103,7 +103,7 @@ Content-Type: application/json
 示例 (Curl):
 
 ```Bash
-curl -X POST http://localhost:9000/send \
+curl -X POST http://localhost:9010/send \
      -H "Content-Type: application/json" \
      -d '{
            "text": "*Server Alert*: \nCPU usage is high!", 
@@ -124,7 +124,7 @@ Method: GET
 示例:
 
 ```Bash
-curl http://localhost:9000/history?limit=10
+curl http://localhost:9010/history?limit=10
 ```
 ## 📝 数据存储
 容器内的数据库路径为 /app/data/history.db。 通过 -v 参数映射后，数据库文件将保存在宿主机的 bot_data 目录下。
