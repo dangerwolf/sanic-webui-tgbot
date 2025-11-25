@@ -2,6 +2,11 @@
 
 一个基于 **Sanic** 框架构建的高性能 Telegram 消息推送服务。集成了现代化的 **Web UI** 界面和标准 **RESTful API**，支持 Docker 容器化部署与数据持久化。
 
+https://hub.docker.com/r/dangerwolf/sanic_send_tg_bot
+
+https://github.com/dangerwolf/sanic-webui-tgbot
+
+
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Sanic](https://img.shields.io/badge/Sanic-23.x-ff69b4.svg)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ed.svg)
